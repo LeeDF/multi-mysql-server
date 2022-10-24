@@ -22,7 +22,7 @@ func main() {
 
 	authServerStatic := mysql.NewAuthServerStatic("", jsonConfig, 0)
 	handl := handler.NewMultiHandler()
-	listener, err := mysql.NewListener("tcp", "10.0.1.55:3306", authServerStatic, handl, 10*time.Second, time.Second, false)
+	listener, err := mysql.NewListener("tcp", "127.0.0.1:3306", authServerStatic, handl, 10*time.Second, time.Second, false)
 	if err != nil {
 		log.Fatalln(err.Error())
 	}

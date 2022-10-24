@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"vitess.io/vitess/go/mysql"
@@ -11,7 +12,8 @@ import (
 
 type MultiHandler struct {
 	//db *sql.DB
-	db *mysql.Conn
+	db  *mysql.Conn
+	db2 *sql.DB
 }
 
 func NewMultiHandler() *MultiHandler {
@@ -76,7 +78,7 @@ func (h *MultiHandler) ComQuery(c *mysql.Conn, query string, callback func(*sqlt
 // ComPrepare is called when a connection receives a prepared
 // statement query.
 func (h *MultiHandler) ComPrepare(c *mysql.Conn, query string, bindVars map[string]*querypb.BindVariable) ([]*querypb.Field, error) {
-	fmt.Println("ComPrepare")
+	fmt.Println("ComPrepare", query, bindVars)
 
 	return []*querypb.Field{}, nil
 }
@@ -84,8 +86,8 @@ func (h *MultiHandler) ComPrepare(c *mysql.Conn, query string, bindVars map[stri
 // ComStmtExecute is called when a connection receives a statement
 // execute query.
 func (h *MultiHandler) ComStmtExecute(c *mysql.Conn, prepare *mysql.PrepareData, callback func(*sqltypes.Result) error) error {
-	fmt.Println("ComStmtExecute")
-
+	fmt.Println("ComStmtExecute", prepare)
+	
 	return nil
 }
 
